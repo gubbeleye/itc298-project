@@ -6,12 +6,13 @@ module.exports = function(grunt) {
     "grunt-autoprefixer",
     "grunt-nodemon",
     "grunt-concurrent",
-    "grunt-contrib-watch"
+    "grunt-contrib-watch",
+    "grunt-contrib-less"
   ];
 
   gruntTasks.forEach(grunt.loadNpmTasks);
 
-  grunt.registerTask("default", ["autoprefixer", "concurrent"]);
+  grunt.registerTask("default", ["autoprefixer", "concurrent", "less"]);
 
   grunt.initConfig({
     concurrent: {
@@ -38,6 +39,10 @@ module.exports = function(grunt) {
       templates: {
         files: "views/**/*.html",
         tasks: []
+      },
+      less: {
+        files: "source/less/**/*.less",
+        tasks: ["less"]
       }
     },
     autoprefixer: {
@@ -46,6 +51,13 @@ module.exports = function(grunt) {
         flatten: true,
         src: "source/css/**/*.css",
         dest: "build/css/"
+      }
+    },
+    less: {
+      development: {
+        files: {
+          "build/css/result.css" : "source/less/source.less"
+        }
       }
     }
   });
